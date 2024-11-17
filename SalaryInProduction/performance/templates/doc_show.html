@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Документ</title>
+</head>
+<body>
+    {% block content %}
+        <h1>{{doc}}</h1>
+        <a href="/perf">Документы выработки</a>
+
+        <h2>Продукция:</h2>
+
+        <table>
+            <tr>
+                <th>Н/П</th>
+                <th>Изделие</th>
+                <th>Количество</th>
+                <th>%</th>
+                <th>Удалить</th>
+            </tr>
+            {% for product in doc_created_products %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="product_show?id={{product.product_id}}"> {{ product }}</a></td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.percent|floatformat:2 }}%</td>
+                    <td><a href="?doc_id={{ doc.id }}&del_pr={{ product.id }}"><button>X</button></a></td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th colspan="3" align="left">Итого:</th>
+                <th align="right">{{ doc.percent|floatformat:2 }}%</th>
+                <th></th>
+            </tr>
+
+        </table>
+        <hr>
+
+        <!-- Добавление выработки -->
+        <h3>Добавить продукцию:</h3>
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="product_id">Изделие: </label>
+            <select id="product_id" name="product_id">
+                {% for product in products %}
+                    <option value="{{ product.id }}">{{ product }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="quantity">Количество: </label>
+            <input type="number" id="quantity" name="quantity" value="1" min="1">
+
+            <input type="hidden" id="pr_add" name="add" value="pr_add">
+            <button type="submit">Добавить</button>
+
+        </form>
+        <br>
+
+        <h2>Бригада:</h2>
+        <hr>
+
+        <table>
+            <tr>
+                <th>Н/П</th>
+                <th>Сотрудник</th>
+                <th>Время работы</th>
+                <th>Удалить</th>
+            </tr>
+            {% for worker in doc_brigade %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="employee_show?emp_id={{worker.employee_id}}"> {{ worker }}</a></td>
+                    <td align="right">{{ worker.working }}</td>
+                    <td><a href="?doc_id={{ doc.id }}&del_wk={{ worker.id }}"><button>X</button></a></td>
+                </tr>
+            {% endfor %}
+
+        </table>
+        <hr>
+
+        <!-- Добавление рабочего в бригаду -->
+        <h3>Добавить в бригаду:</h3>
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="emp_id">Сотрудник: </label>
+            <select id="emp_id" name="emp_id">
+                {% for employee in employees %}
+                    <option value="{{ employee.id }}">{{ employee }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="working">Отработанное время: </label>
+            <input type="time" id="working" name="working" value="12:00:00" min="00:30:00" max="16:00:00">
+
+            <input type="hidden" id="wk_add" name="add" value="wk_add">
+            <button type="submit">Добавить</button>
+
+        </form>
+
+
+    {% endblock %}
+</body>
+</html>

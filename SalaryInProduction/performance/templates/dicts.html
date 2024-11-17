@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Справочники</title>
+</head>
+<body>
+    <h2>Справочники</h2>
+    <h3>|
+    {% for key, dict in dicts.items %}
+        <a href="?id={{ key }}">{{ dict }}</a> |
+    {% endfor %}
+    </h3>
+    <hr>
+
+    {% for element in elements %}
+
+    {% endfor %}
+
+</body>
+</html>

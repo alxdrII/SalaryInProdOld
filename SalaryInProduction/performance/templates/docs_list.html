@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Документы выработки</title>
+</head>
+<body>
+    {% block content %}
+        <h1>Документы выработки</h1>
+        <hr><br>
+
+        <table>
+            <tr>
+                <th>Документ</th>
+                <th>Процент выработки</th>
+                <th>Комментарий</th>
+                <th>Удалить</th>
+
+            </tr>
+        {% for doc in created_docs%}
+            <tr>
+                <td><a href="doc_show?doc_id={{doc.id}}"> {{ doc }}</a></td>
+                <td align="right">{{ doc.percent|floatformat:2 }}%</td>
+                <td>{{ doc.description }}</td>
+                <td><a href="?del_doc={{ doc.id }}"><button>X</button></a></td>
+            </tr>
+        {% endfor %}
+        </table>
+        <hr>
+
+        <!-- Форма создания нового документа -->
+        <form method="post">
+            <fieldset>
+                <legend> Создание нового документа </legend>
+                {% csrf_token %}
+
+                <p><label for="doc_number"> Документ номер: </label>
+                    <input type="number" id="doc_number" name="doc_number" min="1">
+
+                    <label for="doc_data"> от </label>
+                    <input type="date" id="doc_data" name="doc_data"></p>
+
+                <p><label for="description"> Комментарий: </label>
+                    <input type="text" id="description" name="description"></p>
+
+                <input type="hidden" id="doc_add" name="add" value="doc_add">
+
+            <button type="submit">Добавить</button>
+            </fieldset>
+
+        </form>
+
+    {% endblock %}
+
+</body>
+</html>
