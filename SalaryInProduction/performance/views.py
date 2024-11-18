@@ -9,7 +9,9 @@ from .models import CreatedProducts, Production, Brigade, Product, Employee
 def perf_main(request):
     """
     Показываем пользователю все документы за месяц года. По умолчанию - текущий.
+
     """
+    err = None
 
     if request.method == 'POST':
         req_post = request.POST
@@ -23,8 +25,16 @@ def perf_main(request):
                 doc_data = datetime.strptime(doc_data, '%Y-%m-%d')
                 description = req_post.get('description')
 
-                CreatedProducts.objects.create(doc_data=doc_data, doc_number=doc_number,
+                if CreatedProducts.objects.filter(doc_number=doc_number):
+                    err = f'Документ с номером {doc_number} уже существует'
+
+                elif CreatedProducts.objects.filter(doc_data=doc_data):
+                    err = f'Документ на дату {doc_data} уже существует'
+
+                if not err:
+                    CreatedProducts.objects.create(doc_data=doc_data, doc_number=doc_number,
                                                percent=0.0, description=description)
+
             except Exception as ex:
                 print(ex)
 
@@ -45,6 +55,7 @@ def perf_main(request):
 
     context = {
         'created_docs': docs,
+        'err': err,
     }
 
     return render(request, 'docs_list.html', context=context)
@@ -52,10 +63,10 @@ def perf_main(request):
 
 def recalc_percent_doc(doc_id):
     """
-    Пересчет общего процента выработки
+    Расчет процента выработки документа.
     :param doc_id: id документа
-    """
 
+    """
     total_percent = Production.objects.filter(doc_id=doc_id).aggregate(Sum('percent'))['percent__sum']
     CreatedProducts.objects.filter(id=doc_id).update(percent=total_percent)
 
@@ -63,13 +74,14 @@ def recalc_percent_doc(doc_id):
 def perf_doc_show(request):
     """
     Просмотр и редактирование содержимого документа
-    """
 
+    """
     # GET запрос должен быть обязательно
     reqweb = request.GET
     doc_id = reqweb.get('doc_id')
     del_wk = reqweb.get('del_wk')
     del_pr = reqweb.get('del_pr')
+    err = None
 
     if not doc_id:
         return HttpResponse('<h3>Документ не выбран</h3>')
@@ -100,9 +112,15 @@ def perf_doc_show(request):
             if this_add == 'wk_add':
                 # Добавление сотрудника
                 emp_id = int(req_post.get('emp_id'))
-                working = req_post.get('working')
-                working = datetime.strptime(working, "%H:%M" if len(working) == 5 else "%H:%M:%S")
-                Brigade.objects.create(doc_id=doc_id, employee_id=emp_id, working=working.time())
+
+                # Проверим наличие сотрудника, если нет, то добавляем
+                if Brigade.objects.filter(doc_id=doc_id, employee_id=emp_id):
+                    err = 'Сотрудник уже добавлен'
+
+                else:
+                    working = req_post.get('working')
+                    working = datetime.strptime(working, "%H:%M" if len(working) == 5 else "%H:%M:%S")
+                    Brigade.objects.create(doc_id=doc_id, employee_id=emp_id, working=working.time())
 
             elif this_add == 'pr_add':
                 # Добавление изделия
@@ -112,7 +130,7 @@ def perf_doc_show(request):
                 percent = quantity * 100 / quota
                 Production.objects.create(doc_id=doc_id, product_id=product_id, quantity=quantity, percent=percent)
 
-                recalc_percent_doc(doc_id)
+                recalc_percent_doc(doc_id)  #
 
     # связанная с документом выработка продукции
     doc_created_products = Production.objects.filter(doc_id=doc.id)
@@ -128,6 +146,7 @@ def perf_doc_show(request):
         'doc_brigade': doc_brigade,
         'products': products,
         'employees': employees,
+        'err': err,
     }
 
     return render(request, 'doc_show.html', context=context)
@@ -140,3 +159,23 @@ def dict_view(request):
     }
 
     return render(request, 'dicts.html', context=context)
+
+
+def report_view(request):
+    """
+    Выводим:
+    1) проценты выработки по дням;
+    2) Коэффициенты производительности работников.
+    За месяц года (по умолчанию - текущий).
+
+    """
+    month = localdate().month
+    year = localdate().year
+
+    docs = CreatedProducts.objects.filter(doc_data__month=month, doc_data__year=year)
+
+    context = {
+        'docs': docs,
+    }
+
+    return render(request, 'reports.html', context=context)

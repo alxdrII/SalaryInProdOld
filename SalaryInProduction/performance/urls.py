@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import perf_main, perf_doc_show, dict_view
+from .views import perf_main, perf_doc_show, dict_view, report_view
 
 
 urlpatterns = [
     path('', perf_main),
     path('doc_show/', perf_doc_show),
     path('dicts/', dict_view),
+    path('report/', report_view)
 ]

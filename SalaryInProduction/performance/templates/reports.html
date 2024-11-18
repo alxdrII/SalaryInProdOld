@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <title>Отчеты</title>
+</head>
+<body>
+    {% block content %}
+        <a href="/perf">Документы выработки</a> | <a href="/perf/dicts">Справочники</a>
+        <h1>Отчеты</h1>
+        <hr>
+        <h2>Производительность:</h2>
+        <table >
+            <tr>
+                <th>Месяц/День</th>
+                {% for doc in docs%}
+                    <th> {{ doc.doc_data|date:"d" }} </th>
+                {% endfor %}
+                <th>Итого</th>
+            </tr>
+            <tr>
+                <td>Месяц</td>
+                {% for doc in docs%}
+                    <td> {{ doc.percent|floatformat:2 }}% </td>
+                {% endfor %}
+                <th>100.00%</th>
+            </tr>
+        </table>
+        <br><hr>
+        <h2>Коэффициент производительности сотрудника:</h2>
+
+    {% endblock %}
+</body>
+</html>

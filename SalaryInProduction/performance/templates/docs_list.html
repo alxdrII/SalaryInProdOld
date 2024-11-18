@@ -2,10 +2,16 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <style>
+        .red-text {
+            color: red;
+        }
+    </style>
     <title>Документы выработки</title>
 </head>
 <body>
     {% block content %}
+        <a href="/perf/dicts">Справочники</a> | <a href="/perf/report">Отчеты</a>
         <h1>Документы выработки</h1>
         <hr><br>
 
@@ -35,7 +41,7 @@
                 {% csrf_token %}
 
                 <p><label for="doc_number"> Документ номер: </label>
-                    <input type="number" id="doc_number" name="doc_number" min="1">
+                    <input type="number" id="doc_number" name="doc_number" min="1" value="{{ doc.id }}">
 
                     <label for="doc_data"> от </label>
                     <input type="date" id="doc_data" name="doc_data"></p>
@@ -49,6 +55,11 @@
             </fieldset>
 
         </form>
+
+        {% if err %}
+            <hr>
+            <h3 class="red-text"> {{ err }} </h3>
+        {% endif %}
 
     {% endblock %}
 
