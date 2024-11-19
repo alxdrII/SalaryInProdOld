@@ -12,8 +12,15 @@
 </head>
 <body>
     {% block content %}
-        <a href="/perf">Документы выработки</a> | <a href="/perf/dicts">Справочники</a>
-        <h1>Отчеты</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}">Выйти</a> |
+        {% endif %}
+        <a href="/perf">Документы выработки</a> | <a href="/perf/dicts">Справочники</a> | <a>Отчеты</a>
+
+        <h2>Отчеты</h2>
+        {% include "input_data.html" %}
+        {% block input_data %}
+        {% endblock %}
         <hr>
         <h2>Производительность:</h2>
         <table >

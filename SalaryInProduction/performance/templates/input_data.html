@@ -1,0 +1,31 @@
+{% block input_data %}
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="mount">Месяц</label>
+        <select id="mount" name="mount">
+            {% for mount in mounts %}
+                {% if current_month == forloop.counter %}
+                    <option value="{{ forloop.counter }}" selected>{{ mount }}</option>
+                {% else %}
+                    <option value="{{ forloop.counter }}">{{ mount }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+
+        <label for="year">Год</label>
+        <select id="year" name="year">
+            {% for year in years %}
+                {% if current_year == year %}
+                    <option value="{{ year }}" selected>{{ year }}</option>
+                {% else %}
+                    <option value="{{ year }}">{{ year }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+
+        <input type="hidden" id="select_data" name="select_data" value="select_data">
+        <button type="submit">Выбрать</button>
+
+    </form>
+{% endblock %}

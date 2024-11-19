@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
 from django.utils.timezone import localdate
@@ -6,16 +6,53 @@ from django.db.models import Sum
 from .models import CreatedProducts, Production, Brigade, Product, Employee
 
 
+def recalc_percent_doc(doc_id):
+    """
+    Расчет процента выработки документа.
+    :param doc_id: id документа
+
+    """
+    total_percent = Production.objects.filter(doc_id=doc_id).aggregate(Sum('percent'))['percent__sum']
+    CreatedProducts.objects.filter(id=doc_id).update(percent=total_percent)
+
+
+def array_for_date_selection():
+    """
+    Функция возвращает кортеж списков названий месяцев и числа последних 5 лет
+    :return: (years, mounts, year, month)
+    """
+    month = localdate().month
+    year = localdate().year
+
+    mounts = [
+        'Январь', 'Февраль', 'Март',
+        'Апрель', 'Май', 'Июнь',
+        'Июль', 'Август', 'Сентябрь',
+        'Октябрь', 'Ноябрь', 'Декабрь'
+    ]
+
+    years = []
+    for i in range(year-5, year+2):
+        years.append(i)
+
+    return years, mounts, year, month
+
+
 def perf_main(request):
     """
     Показываем пользователю все документы за месяц года. По умолчанию - текущий.
 
     """
+    if not request.user.is_authenticated:
+        return redirect('login')
+
     err = None
+    years, mounts, current_year, current_month = array_for_date_selection()
 
     if request.method == 'POST':
         req_post = request.POST
         this_add = req_post.get('add')
+        select_data = req_post.get('select_data')
 
         # Добавление нового документа
         if this_add:
@@ -38,6 +75,11 @@ def perf_main(request):
             except Exception as ex:
                 print(ex)
 
+        # Изменение даты выборки документов
+        if select_data:
+            current_year = int(req_post.get('year'))
+            current_month = int(req_post.get('mount'))
+
     elif request.method == 'GET':
         req_get = request.GET
         doc_id = req_get.get('del_doc')
@@ -47,28 +89,19 @@ def perf_main(request):
             if doc:
                 doc.delete()
 
-    current_month = localdate().month
-    current_year = localdate().year
-
     # получаем документы выработки
     docs = CreatedProducts.objects.filter(doc_data__month=current_month, doc_data__year=current_year)
 
     context = {
         'created_docs': docs,
         'err': err,
+        'years': years,
+        'mounts': mounts,
+        'current_year': current_year,
+        'current_month': current_month,
     }
 
     return render(request, 'docs_list.html', context=context)
-
-
-def recalc_percent_doc(doc_id):
-    """
-    Расчет процента выработки документа.
-    :param doc_id: id документа
-
-    """
-    total_percent = Production.objects.filter(doc_id=doc_id).aggregate(Sum('percent'))['percent__sum']
-    CreatedProducts.objects.filter(id=doc_id).update(percent=total_percent)
 
 
 def perf_doc_show(request):
@@ -76,6 +109,9 @@ def perf_doc_show(request):
     Просмотр и редактирование содержимого документа
 
     """
+    if not request.user.is_authenticated:
+        return redirect('login')
+
     # GET запрос должен быть обязательно
     reqweb = request.GET
     doc_id = reqweb.get('doc_id')
@@ -153,6 +189,22 @@ def perf_doc_show(request):
 
 
 def dict_view(request):
+    """
+    Просмотр и добавление справочников
+
+    """
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    if request.method == 'POST':
+        reqweb = request.GET
+        dict = reqweb.get('dict')
+
+        if dict == 'empl':
+            pass
+
+        elif dict == 'prod':
+            pass
 
     context = {
         'dicts': {'empl': 'Сотрудники', 'prod': 'Изделия'},
@@ -169,13 +221,26 @@ def report_view(request):
     За месяц года (по умолчанию - текущий).
 
     """
-    month = localdate().month
-    year = localdate().year
+    if not request.user.is_authenticated:
+        return redirect('login')
 
-    docs = CreatedProducts.objects.filter(doc_data__month=month, doc_data__year=year)
+    years, mounts, current_year, current_month = array_for_date_selection()
+
+    if request.method == 'POST':
+        req_post = request.POST
+        select_data = req_post.get('select_data')
+        if select_data:
+            current_year = int(req_post.get('year'))
+            current_month = int(req_post.get('mount'))
+
+    docs = CreatedProducts.objects.filter(doc_data__month=current_month, doc_data__year=current_year)
 
     context = {
         'docs': docs,
+        'years': years,
+        'mounts': mounts,
+        'current_year': current_year,
+        'current_month': current_month,
     }
 
     return render(request, 'reports.html', context=context)
