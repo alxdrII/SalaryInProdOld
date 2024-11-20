@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
 from django.utils.timezone import localdate
-from django.db.models import Sum
+from django.db.models import Sum, Avg
 from .models import CreatedProducts, Production, Brigade, Product, Employee
 
 
@@ -190,7 +190,7 @@ def perf_doc_show(request):
 
 def dict_view(request):
     """
-    Просмотр и добавление справочников
+    Просмотр и редактирование справочников
 
     """
     if not request.user.is_authenticated:
@@ -233,7 +233,28 @@ def report_view(request):
             current_year = int(req_post.get('year'))
             current_month = int(req_post.get('mount'))
 
+    # для отчета по общей производительности
     docs = CreatedProducts.objects.filter(doc_data__month=current_month, doc_data__year=current_year)
+    percent_avg = docs.aggregate(Avg('percent'))['percent__avg']
+
+    # для отчета по КП сотрудников:
+    # Чтобы сотрудник получил коэффициент равный 1.0, ему нужно отработать 10560 минут в месяц
+    # т.е. (22 дня * 8 час * 60 мин)
+    NORMA_MIN = 10560
+
+    # Выборка всех работавших в текущем месяце
+    sample = Brigade.objects.filter(doc__doc_data__month=current_month, doc__doc_data__year=current_year)
+
+    # вычислим суммарное время работы сотрудников за текущий месяц в минутах
+    workers = {}
+    for obj in sample:
+        if obj.employee in workers:
+            workers[obj.employee] += obj.working.hour * 60 + obj.working.minute
+        else:
+            workers[obj.employee] = obj.working.hour * 60 + obj.working.minute
+
+    for key, value in workers.items():
+        workers[key] = value / NORMA_MIN
 
     context = {
         'docs': docs,
@@ -241,6 +262,8 @@ def report_view(request):
         'mounts': mounts,
         'current_year': current_year,
         'current_month': current_month,
+        'percent_avg': percent_avg,
+        'workers': workers,
     }
 
     return render(request, 'reports.html', context=context)

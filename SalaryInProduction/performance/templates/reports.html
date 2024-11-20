@@ -7,6 +7,9 @@
             border: 1px solid black;
             border-collapse: collapse;
         }
+        th, td {
+            padding: 12px;
+        }
     </style>
     <title>Отчеты</title>
 </head>
@@ -23,24 +26,37 @@
         {% endblock %}
         <hr>
         <h2>Производительность:</h2>
-        <table >
+        <table>
             <tr>
-                <th>Месяц/День</th>
+                <th> День месяца </th>
                 {% for doc in docs%}
                     <th> {{ doc.doc_data|date:"d" }} </th>
                 {% endfor %}
                 <th>Итого</th>
             </tr>
             <tr>
-                <td>Месяц</td>
-                {% for doc in docs%}
-                    <td> {{ doc.percent|floatformat:2 }}% </td>
+                <td> % </td>
+                {% for doc in docs %}
+                    <td> {{ doc.percent|floatformat:2 }} </td>
                 {% endfor %}
-                <th>100.00%</th>
+                <th>{{percent_avg|floatformat:2}}</th>
             </tr>
         </table>
         <br><hr>
+
         <h2>Коэффициент производительности сотрудника:</h2>
+        <table>
+            <tr>
+                <th> Сотрудник </th>
+                <th> Коэффициент производительности </th>
+            </tr>
+            {% for work, value in workers.items %}
+            <tr>
+                <td> {{ work }} </td>
+                <td align="center"> {{ value|floatformat:3 }} </td>
+            </tr>
+            {% endfor %}
+        </table>
 
     {% endblock %}
 </body>
