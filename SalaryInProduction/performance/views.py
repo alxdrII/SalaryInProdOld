@@ -175,7 +175,7 @@ def perf_doc_show(request):
 
     # связанная с документом сотрудники бригада
     doc_brigade = Brigade.objects.filter(doc_id=doc.id)
-    employees = Employee.objects.all()
+    employees = Employee.objects.filter(dismissed=False)
 
     context = {
         'doc': doc,
@@ -330,3 +330,53 @@ def report_view(request):
     }
 
     return render(request, 'reports.html', context=context)
+
+
+def edit_employee(request, empl_id=None):
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    if not empl_id:
+        return redirect('employees_list')
+
+    err = None
+
+    if request.method == 'POST':
+        req_post = request.POST
+        last_name = req_post.get('last_name')
+        first_name = req_post.get('first_name')
+        middle_name = req_post.get('middle_name')
+        hired = req_post.get('hired')
+        dismissed = not req_post.get('dismissed') is None
+
+        hired = datetime.strptime(hired,"%Y-%m-%d")
+        fullname = f"{last_name.strip()} {first_name.strip()} {middle_name.strip()}"
+
+        try:
+            Employee.objects.filter(id=empl_id).update(fullname=fullname, hired=hired, dismissed=dismissed)
+            return redirect('employees_list')
+
+        except Exception as ex:
+            err = "Ошибка записи данных"
+            print(ex)
+
+    employee = Employee.objects.filter(id=empl_id).first()
+    if not employee:
+        return redirect('employees_list')
+
+    last_name, first_name, middle_name, *_ = employee.fullname.split(sep=" ")
+
+    context = {
+        'last_name': last_name,
+        'first_name': first_name,
+        'middle_name': middle_name,
+        'employee': employee,
+        'err': err,
+    }
+
+    return render(request, 'employee_edit.html', context=context)
+
+
+def edit_product(request, prod_id):
+    pass

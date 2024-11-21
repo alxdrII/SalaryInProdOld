@@ -9,7 +9,7 @@
         </tr>
         {% for empl in employees %}
         <tr>
-            <td> {{ empl }} </td>
+            <td><a href="/perf/edit_empl/{{ empl.id }}">{{ empl }}</a></td>
             <td align="center"> {{ empl.hired }} </td>
             {% if empl.dismissed %}
                 <td align="center"> Уволен </td>
@@ -21,7 +21,7 @@
     </table>
     <hr>
 
-    <!-- Форма добваления нового рабочего -->
+    <!-- Форма добавления нового рабочего -->
     <form method="post">
         <fieldset>
             <legend> Добавление нового рабочего </legend>

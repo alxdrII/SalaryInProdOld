@@ -1,0 +1,39 @@
+{% extends "dicts_base.html" %}
+
+{% block content %}
+    <!-- Форма редактирования рабочего -->
+    <form method="post">
+        <fieldset>
+            <legend> Рабочий: {{ employee.fullname }} </legend>
+            {% csrf_token %}
+
+            <p> <label for="last_name"> Фамилия: </label>
+                <input type="text" id="last_name" name="last_name" maxlength="25" value="{{ last_name }}">
+
+                <label for="first_name"> Имя: </label>
+                <input type="text" id="first_name" name="first_name" maxlength="25" value="{{ first_name }}">
+
+                <label for="middle_name"> Отчество: </label>
+                <input type="text" id="middle_name" name="middle_name" maxlength="25" value="{{ middle_name }}"></p>
+
+            <p> <label for="hired"> Дата устройства: </label>
+                <input type="date" id="hired" name="hired" value="{{ employee.hired|date:'Y-m-d' }}"></p>
+
+            <p> <label for="dismissed"> Уволен: </label>
+                <input type="checkbox"
+                       id="dismissed"
+                       name="dismissed"
+                       {% if employee.dismissed %} checked {% endif %}>
+            </p>
+
+            <button type="submit">Изменить</button>
+            <button><a href="/perf/dicts/works">Отмена</a></button>
+
+        </fieldset>
+    </form>
+    {% if err %}
+        <hr>
+        <h3 class="red-text"> {{ err }} </h3>
+    {% endif %}
+
+{% endblock %}
