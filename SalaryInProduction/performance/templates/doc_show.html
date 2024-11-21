@@ -45,23 +45,25 @@
         <hr>
 
         <!-- Добавление выработки -->
-        <h3>Добавить продукцию:</h3>
         <form method="post">
-            {% csrf_token %}
+            <fieldset>
+                <legend> Добавить продукцию: </legend>
+                {% csrf_token %}
 
-            <label for="product_id">Изделие: </label>
-            <select id="product_id" name="product_id">
-                {% for product in products %}
-                    <option value="{{ product.id }}">{{ product }}</option>
-                {% endfor %}
-            </select>
+                <label for="product_id">Изделие: </label>
+                <select id="product_id" name="product_id">
+                    {% for product in products %}
+                        <option value="{{ product.id }}">{{ product }}</option>
+                    {% endfor %}
+                </select>
 
-            <label for="quantity">Количество: </label>
-            <input type="number" id="quantity" name="quantity" value="1" min="1">
+                <label for="quantity">Количество: </label>
+                <input type="number" id="quantity" name="quantity" value="1" min="1">
 
-            <input type="hidden" id="pr_add" name="add" value="pr_add">
-            <button type="submit">Добавить</button>
+                <input type="hidden" id="pr_add" name="add" value="pr_add">
+                <button type="submit">Добавить</button>
 
+            </fieldset>
         </form>
         <br>
 
@@ -71,7 +73,7 @@
         <table>
             <tr>
                 <th>Н/П</th>
-                <th>Сотрудник</th>
+                <th>Рабочий</th>
                 <th>Время работы</th>
                 <th>Удалить</th>
             </tr>
@@ -88,23 +90,24 @@
         <hr>
 
         <!-- Добавление рабочего в бригаду -->
-        <h3>Добавить сотрудника:</h3>
         <form method="post">
-            {% csrf_token %}
+            <fieldset>
+                <legend> Добавить рабочего: </legend>
+                    {% csrf_token %}
 
-            <label for="emp_id">Сотрудник: </label>
-            <select id="emp_id" name="emp_id">
-                {% for employee in employees %}
-                    <option value="{{ employee.id }}">{{ employee }}</option>
-                {% endfor %}
-            </select>
+                <label for="emp_id">Рабочий: </label>
+                <select id="emp_id" name="emp_id">
+                    {% for employee in employees %}
+                        <option value="{{ employee.id }}">{{ employee }}</option>
+                    {% endfor %}
+                </select>
 
-            <label for="working">Отработанное время: </label>
-            <input type="time" id="working" name="working" value="12:00" min="00:30" max="16:00">
+                <label for="working">Отработанное время: </label>
+                <input type="time" id="working" name="working" value="12:00" min="00:30" max="16:00">
 
-            <input type="hidden" id="wk_add" name="add" value="wk_add">
-            <button type="submit">Добавить</button>
-
+                <input type="hidden" id="wk_add" name="add" value="wk_add">
+                <button type="submit">Добавить</button>
+            </fieldset>
         </form>
         {% if err %}
             <hr>

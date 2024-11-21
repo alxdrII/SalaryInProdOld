@@ -3,12 +3,13 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.utils.timezone import localdate
 from django.db.models import Sum, Avg
+from django.db.utils import IntegrityError
 from .models import CreatedProducts, Production, Brigade, Product, Employee
 
 
 def recalc_percent_doc(doc_id):
     """
-    Расчет процента выработки документа.
+    Функция рассчитывает процент выработки документа.
     :param doc_id: id документа
 
     """
@@ -188,29 +189,91 @@ def perf_doc_show(request):
     return render(request, 'doc_show.html', context=context)
 
 
-def dict_view(request):
+def dicts_view(request):
     """
-    Просмотр и редактирование справочников
+    Выбор справочников для просмотра и редактирования
 
     """
     if not request.user.is_authenticated:
         return redirect('login')
 
+    return render(request, 'dicts_base.html', context={})
+
+
+def works_view(request):
+    """
+    Список рабочих
+
+    """
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    err = None
+
     if request.method == 'POST':
-        reqweb = request.GET
-        dict = reqweb.get('dict')
+        req_post = request.POST
+        last_name = req_post.get('last_name')
+        first_name = req_post.get('first_name')
+        middle_name = req_post.get('middle_name')
+        hired = req_post.get('hired')
 
-        if dict == 'empl':
-            pass
+        hired = datetime.strptime(hired,"%Y-%m-%d")
+        fullname = f"{last_name.strip()} {first_name.strip()} {middle_name.strip()}"
 
-        elif dict == 'prod':
-            pass
+        try:
+            Employee.objects.create(fullname=fullname, hired=hired)
+
+        except Exception as ex:
+            err = "Ошибка записи данных"
+            print(ex)
+
+    current_date = localdate()
+
+    employees = Employee.objects.all()
 
     context = {
-        'dicts': {'empl': 'Сотрудники', 'prod': 'Изделия'},
+        'employees': employees,
+        'current_date': current_date,
+        'err': err,
     }
 
-    return render(request, 'dicts.html', context=context)
+    return render(request, 'employees_list.html', context=context)
+
+
+def prods_view(request):
+    """
+    Просмотр и добавление изделий
+
+    """
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    err = None
+
+    if request.method == 'POST':
+        req_post = request.POST
+        code = req_post.get('code')
+        name = req_post.get('name')
+        quota = int(req_post.get('quota'))
+        descript = req_post.get('descript')
+
+        try:
+            Product.objects.create(code=code, name=name, quota=quota, description=descript)
+        except IntegrityError:
+            err = "Артикул уже существует"
+        except Exception as ex:
+            err = "Ошибка записи данных"
+            print(ex)
+
+    products = Product.objects.all()
+
+    context = {
+        'products': products,
+        'err': err,
+    }
+
+    return render(request, 'products_list.html', context=context)
 
 
 def report_view(request):
@@ -237,7 +300,7 @@ def report_view(request):
     docs = CreatedProducts.objects.filter(doc_data__month=current_month, doc_data__year=current_year)
     percent_avg = docs.aggregate(Avg('percent'))['percent__avg']
 
-    # для отчета по КП сотрудников:
+    # Отчет по КП сотрудников:
     # Чтобы сотрудник получил коэффициент равный 1.0, ему нужно отработать 10560 минут в месяц
     # т.е. (22 дня * 8 час * 60 мин)
     NORMA_MIN = 10560

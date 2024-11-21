@@ -1,0 +1,48 @@
+{% extends "dicts_base.html" %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th> Артикул </th>
+            <th> Наименование </th>
+            <th> Норма выработки </th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td> {{ product }} </td>
+            <td> {{ product.name }} </td>
+            <td align="center"> {{ product.quota }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <hr>
+
+    <!-- Форма добаваления нового изделия -->
+    <form method="post">
+        <fieldset>
+            <legend> Новое изделие </legend>
+            {% csrf_token %}
+
+            <p> <label for="code"> Артикул: </label>
+                <input type="text" id="code" name="code" maxlength="50">
+
+                <label for="name"> Наименование: </label>
+                <input type="text" id="name" name="name" maxlength="150"></p>
+
+            <p> <label for="quota"> Норма выработки за день: </label>
+                <input type="number" id="quota" name="quota" value="1" min="1"></p>
+
+            <p> <label for="descript"> Комментарий: </label>
+                <input type="text" id="descript" name="descript" maxlength="250"></p>
+
+            <button type="submit">Добавить</button>
+
+        </fieldset>
+    </form>
+
+    {% if err %}
+        <hr>
+        <h3 class="red-text"> {{ err }} </h3>
+    {% endif %}
+
+{% endblock %}

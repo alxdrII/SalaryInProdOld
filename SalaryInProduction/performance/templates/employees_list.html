@@ -1,0 +1,52 @@
+{% extends "dicts_base.html" %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th> ФИО </th>
+            <th> Устроен </th>
+            <th> Статус </th>
+        </tr>
+        {% for empl in employees %}
+        <tr>
+            <td> {{ empl }} </td>
+            <td align="center"> {{ empl.hired }} </td>
+            {% if empl.dismissed %}
+                <td align="center"> Уволен </td>
+            {% else %}
+                <td> </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    <hr>
+
+    <!-- Форма добваления нового рабочего -->
+    <form method="post">
+        <fieldset>
+            <legend> Добавление нового рабочего </legend>
+            {% csrf_token %}
+
+            <p> <label for="last_name"> Фамилия: </label>
+                <input type="text" id="last_name" name="last_name" maxlength="25">
+
+                <label for="first_name"> Имя: </label>
+                <input type="text" id="first_name" name="first_name" maxlength="25">
+
+                <label for="middle_name"> Отчество: </label>
+                <input type="text" id="middle_name" name="middle_name" maxlength="25"></p>
+
+            <p> <label for="hired"> Дата устройства </label>
+                <input type="date" id="hired" name="hired" value="{{ current_date|date:'Y-m-d' }}"></p>
+
+            <button type="submit">Добавить</button>
+
+        </fieldset>
+    </form>
+
+    {% if err %}
+        <hr>
+        <h3 class="red-text"> {{ err }} </h3>
+    {% endif %}
+
+{% endblock %}
