@@ -11,8 +11,8 @@ def recalc_percent_doc(doc_id):
     """
     Функция рассчитывает процент выработки документа.
     :param doc_id: id документа
-
     """
+
     total_percent = Production.objects.filter(doc_id=doc_id).aggregate(Sum('percent'))['percent__sum']
     CreatedProducts.objects.filter(id=doc_id).update(percent=total_percent)
 
@@ -22,6 +22,7 @@ def array_for_date_selection():
     Функция возвращает кортеж списков названий месяцев и числа последних 5 лет
     :return: (years, mounts, year, month)
     """
+
     month = localdate().month
     year = localdate().year
 
@@ -108,8 +109,8 @@ def perf_main(request):
 def perf_doc_show(request):
     """
     Просмотр и редактирование содержимого документа
-
     """
+
     if not request.user.is_authenticated:
         return redirect('login')
 
@@ -203,8 +204,8 @@ def dicts_view(request):
 def works_view(request):
     """
     Список рабочих
-
     """
+
     if not request.user.is_authenticated:
         return redirect('login')
 
@@ -243,7 +244,6 @@ def works_view(request):
 def prods_view(request):
     """
     Просмотр и добавление изделий
-
     """
 
     if not request.user.is_authenticated:
@@ -282,8 +282,8 @@ def report_view(request):
     1) проценты выработки по дням;
     2) Коэффициенты производительности работников.
     За месяц года (по умолчанию - текущий).
-
     """
+
     if not request.user.is_authenticated:
         return redirect('login')
 
@@ -333,6 +333,12 @@ def report_view(request):
 
 
 def edit_employee(request, empl_id=None):
+    """
+    Вывод и обработка формы для редактирования элемента справочника Employee.
+    :param request:
+    :param empl_id: id элемента справочника Employee
+    :return:
+    """
 
     if not request.user.is_authenticated:
         return redirect('login')
@@ -379,6 +385,12 @@ def edit_employee(request, empl_id=None):
 
 
 def edit_product(request, prod_id):
+    """
+    Вывод и обработка формы для редактирования элемента справочника Product
+    :param request:
+    :param prod_id: id элемента справочника Product
+    :return:
+    """
 
     if not request.user.is_authenticated:
         return redirect('login')
@@ -420,4 +432,9 @@ def edit_product(request, prod_id):
 
 
 def main(request):
+    """
+    Перброс на страницу приложения
+    :param request:
+    :return:
+    """
     return redirect('/perf')
