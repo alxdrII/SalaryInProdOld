@@ -17,9 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path, include
+from performance.views import main
 import performance
 
+
 urlpatterns = [
+    path('', main),
     path('admin/', admin.site.urls),
     path('perf/', include('performance.urls')),
     path('accounts/login/', LoginView.as_view(next_page='/perf'), name='login'),

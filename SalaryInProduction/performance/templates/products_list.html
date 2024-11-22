@@ -9,7 +9,7 @@
         </tr>
         {% for product in products %}
         <tr>
-            <td> {{ product }} </td>
+            <td><a href="/perf/edit_prod/{{ product.id }}"> {{ product }} </a></td>
             <td> {{ product.name }} </td>
             <td align="center"> {{ product.quota }} </td>
         </tr>

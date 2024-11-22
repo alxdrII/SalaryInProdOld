@@ -1,0 +1,33 @@
+{% extends "dicts_base.html" %}
+
+{% block content %}
+    <!-- Форма редактирования продукта -->
+    <form method="post">
+        <fieldset>
+            <legend> Продукт: {{ product.code }} </legend>
+            {% csrf_token %}
+
+            <p> <label for="code"> Артикул: </label>
+                <input type="text" id="code" name="code" maxlength="50" value="{{ product.code }}"></p>
+
+            <p> <label for="name"> Наименование: </label>
+                <input type="text" id="name" name="name" maxlength="150" value="{{ product.name }}"></p>
+
+            <p> <label for="quota"> Норма выработки за день: </label>
+                <input type="number" id="quota" name="quota" value="{{ product.quota }}" min="1"></p>
+
+            <p> <label for="descript"> Комментарий: </label>
+                <input type="text" id="descript" name="descript" maxlength="250" value="{{ product.description }}"></p>
+
+            <button type="submit">Изменить</button>
+            <button><a href="/perf/dicts/prods">Отмена</a></button>
+
+        </fieldset>
+    </form>
+
+    {% if err %}
+        <hr>
+        <h3 class="red-text"> {{ err }} </h3>
+    {% endif %}
+
+{% endblock %}

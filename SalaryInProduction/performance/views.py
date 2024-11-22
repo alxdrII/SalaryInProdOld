@@ -379,4 +379,45 @@ def edit_employee(request, empl_id=None):
 
 
 def edit_product(request, prod_id):
-    pass
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    if not prod_id:
+        return redirect('products_list')
+
+    err = None
+
+    if request.method == 'POST':
+        req_post = request.POST
+        code = req_post.get('code')
+        name = req_post.get('name')
+        quota = int(req_post.get('quota'))
+        descript = req_post.get('descript')
+        print(descript)
+
+        try:
+            Product.objects.filter(id=prod_id).update(code=code, name=name, quota=quota, description=descript)
+            return redirect('products_list')
+
+        except IntegrityError:
+            err = "Артикул уже существует"
+
+        except Exception as ex:
+            err = "Ошибка записи данных"
+            print(ex)
+
+    product = Product.objects.filter(id=prod_id).first()
+    if not product:
+        return redirect('products_list')
+
+    context = {
+        'product': product,
+        'err': err,
+    }
+
+    return render(request, 'product_edit.html', context=context)
+
+
+def main(request):
+    return redirect('/perf')
