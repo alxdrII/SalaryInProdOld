@@ -32,7 +32,8 @@
             </tr>
         {% for doc in created_docs%}
             <tr>
-                <td><a href="doc_show?doc_id={{doc.id}}"> {{ doc }}</a></td>
+                <!--td><a href="doc_show?doc_id={{doc.id}}"> {{ doc }}</a></td-->
+                <td><a href="doc_show/{{doc.id}}"> {{ doc }}</a></td>
                 <td align="right">{{ doc.percent|floatformat:2 }}%</td>
                 <td>{{ doc.description }}</td>
                 <td><a href="?del_doc={{ doc.id }}"><button>X</button></a></td>

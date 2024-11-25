@@ -106,7 +106,7 @@ def perf_main(request):
     return render(request, 'docs_list.html', context=context)
 
 
-def perf_doc_show(request):
+def perf_doc_show(request, doc_id):
     """
     Просмотр и редактирование содержимого документа
     """
@@ -114,9 +114,8 @@ def perf_doc_show(request):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    # GET запрос должен быть обязательно
+    # Обрабатываем GET запрос
     reqweb = request.GET
-    doc_id = reqweb.get('doc_id')
     del_wk = reqweb.get('del_wk')
     del_pr = reqweb.get('del_pr')
     err = None
@@ -124,7 +123,6 @@ def perf_doc_show(request):
     if not doc_id:
         return HttpResponse('<h3>Документ не выбран</h3>')
 
-    doc_id = int(doc_id)
     doc = CreatedProducts.objects.filter(id=doc_id).first()
     if not doc:
         return HttpResponse('<h3>Документ не существует</h3>')
@@ -193,8 +191,8 @@ def perf_doc_show(request):
 def dicts_view(request):
     """
     Выбор справочников для просмотра и редактирования
-
     """
+
     if not request.user.is_authenticated:
         return redirect('login')
 
@@ -335,7 +333,8 @@ def report_view(request):
 def edit_employee(request, empl_id=None):
     """
     Вывод и обработка формы для редактирования элемента справочника Employee.
-    :param request:
+
+    :param request: объект класса HttpRequest
     :param empl_id: id элемента справочника Employee
     :return:
     """
@@ -387,7 +386,8 @@ def edit_employee(request, empl_id=None):
 def edit_product(request, prod_id):
     """
     Вывод и обработка формы для редактирования элемента справочника Product
-    :param request:
+
+    :param request: объект класса HttpRequest
     :param prod_id: id элемента справочника Product
     :return:
     """
@@ -433,8 +433,10 @@ def edit_product(request, prod_id):
 
 def main(request):
     """
-    Перброс на страницу приложения
+    Переброс на страницу приложения
+
     :param request:
     :return:
     """
+
     return redirect('/perf')

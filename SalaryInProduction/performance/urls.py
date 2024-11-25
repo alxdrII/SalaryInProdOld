@@ -4,7 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('', perf_main),
-    path('doc_show/', perf_doc_show),
+    path('doc_show/<int:doc_id>', perf_doc_show),
     path('dicts/works/', works_view, name="employees_list"),
     path('dicts/prods/', prods_view, name="products_list"),
     path('dicts/', dicts_view),
