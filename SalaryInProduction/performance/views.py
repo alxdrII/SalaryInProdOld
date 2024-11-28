@@ -34,7 +34,7 @@ def array_for_date_selection():
     ]
 
     years = []
-    for i in range(year-5, year+2):
+    for i in range(year-5, year+1):
         years.append(i)
 
     return years, mounts, year, month
@@ -315,7 +315,7 @@ def report_view(request):
             workers[obj.employee] = obj.working.hour * 60 + obj.working.minute
 
     for key, value in workers.items():
-        workers[key] = value / NORMA_MIN
+        workers[key] = value / NORMA_MIN * float(percent_avg / 100)
 
     context = {
         'docs': docs,

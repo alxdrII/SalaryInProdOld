@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1c797806-beb2-4b6f-ab7f-e65eee091b68" name="Changes" comment="25.11.2024 22:33&#10;Correction of defects">
+      <change afterPath="$PROJECT_DIR$/.idea/SalaryInProduction.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/templates/reports.html" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/templates/reports.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/reports.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/reports.png" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2oiMOO0amvcwQbBbkhRB6I9xBvC" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.SalaryInProduction.executor": "Run",
+    "Python.temp.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.urls.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/lebedevaa/media/PyCharmProjects/SalaryInProduction/images",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/images" />
+      <recent name="$PROJECT_DIR$/SalaryInProduction/performance/templates" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="SalaryInProduction" type="PythonConfigurationType" factoryName="Python">
+      <module name="SalaryInProduction" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SalaryInProduction/SalaryInProduction" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SalaryInProduction/manage.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-babbdf50b680-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.15989.155" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1c797806-beb2-4b6f-ab7f-e65eee091b68" name="Changes" comment="" />
+      <created>1731347910179</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731347910179</updated>
+    </task>
+    <task id="LOCAL-00001" summary="17.11.2024&#10;Production">
+      <option name="closed" value="true" />
+      <created>1731873080353</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1731873080354</updated>
+    </task>
+    <task id="LOCAL-00002" summary="18.11.2024&#10;Reports, err">
+      <option name="closed" value="true" />
+      <created>1731956314868</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731956314868</updated>
+    </task>
+    <task id="LOCAL-00003" summary="19.11.2024&#10;Select date, Registration">
+      <option name="closed" value="true" />
+      <created>1732048087521</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1732048087521</updated>
+    </task>
+    <task id="LOCAL-00004" summary="20.11.2024&#10;Report">
+      <option name="closed" value="true" />
+      <created>1732133510688</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1732133510688</updated>
+    </task>
+    <task id="LOCAL-00005" summary="21.11.2024&#10;dicts look">
+      <option name="closed" value="true" />
+      <created>1732209158647</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1732209158647</updated>
+    </task>
+    <task id="LOCAL-00006" summary="22.11.2024 00:08&#10;dicts edit employee">
+      <option name="closed" value="true" />
+      <created>1732223321907</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1732223321907</updated>
+    </task>
+    <task id="LOCAL-00007" summary="22.11.2024 13:35&#10;dicts edit product">
+      <option name="closed" value="true" />
+      <created>1732271752655</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1732271752655</updated>
+    </task>
+    <task id="LOCAL-00008" summary="22.11.2024 22:43&#10;requirements">
+      <option name="closed" value="true" />
+      <created>1732304659538</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1732304659538</updated>
+    </task>
+    <task id="LOCAL-00009" summary="25.11.2024 22:33&#10;Correction of defects">
+      <option name="closed" value="true" />
+      <created>1732563304480</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1732563304480</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="17.11.2024&#10;Production" />
+    <MESSAGE value="18.11.2024&#10;Reports, err" />
+    <MESSAGE value="19.11.2024&#10;Select date, Registration" />
+    <MESSAGE value="20.11.2024&#10;Report" />
+    <MESSAGE value="21.11.2024&#10;dicts look" />
+    <MESSAGE value="22.11.2024 00:08&#10;dicts edit employee" />
+    <MESSAGE value="22.11.2024 13:35&#10;dicts edit product" />
+    <MESSAGE value="22.11.2024 22:43&#10;requirements" />
+    <MESSAGE value="25.11.2024 22:33&#10;Correction of defects" />
+    <option name="LAST_COMMIT_MESSAGE" value="25.11.2024 22:33&#10;Correction of defects" />
+  </component>
+</project>
