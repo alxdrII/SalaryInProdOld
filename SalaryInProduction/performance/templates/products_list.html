@@ -9,7 +9,7 @@
         </tr>
         {% for product in products %}
         <tr>
-            <td><a href="/perf/edit_prod/{{ product.id }}"> {{ product }} </a></td>
+            <td><a href="{% url 'edit_product' product.id %}"> {{ product }} </a></td>
             <td> {{ product.name }} </td>
             <td align="center"> {{ product.quota }} </td>
         </tr>
@@ -17,7 +17,7 @@
     </table>
     <hr>
 
-    <!-- Форма добаваления нового изделия -->
+    <!-- Форма добавления нового изделия -->
     <form method="post">
         <fieldset>
             <legend> Новое изделие </legend>

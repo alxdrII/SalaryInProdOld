@@ -14,7 +14,7 @@
         {% if user.is_authenticated %}
             <a href="{% url 'logout' %}">Выйти</a> |
         {% endif %}
-        <a href="/perf">Документы выработки</a> | <a href="/perf/dicts">Справочники</a> | <a href="/perf/report">Отчеты</a>
+        <a href="{% url 'docs_list' %}">Документы выработки</a> | <a href="{% url 'menu_lists' %}">Справочники</a> | <a href="{% url 'report' %}">Отчеты</a>
 
         <h2>{{doc}}</h2>
         <h2>Продукция:</h2>
@@ -29,7 +29,7 @@
             {% for product in doc_created_products %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td><a href="/perf/edit_prod/{{product.product_id}}"> {{ product }}</a></td>
+                    <td><a href="{% url 'edit_product' product.product_id %}">{{ product }}</a></td>
                     <td>{{ product.quantity }}</td>
                     <td>{{ product.percent|floatformat:2 }}%</td>
                     <td><a href="?doc_id={{ doc.id }}&del_pr={{ product.id }}"><button>X</button></a></td>
@@ -80,7 +80,7 @@
             {% for worker in doc_brigade %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td><a href="/perf/edit_empl/{{worker.employee_id}}"> {{ worker }}</a></td>
+                    <td><a href="{% url 'edit_employee' worker.employee_id %}"> {{ worker }}</a></td>
                     <td align="right">{{ worker.working }}</td>
                     <td><a href="?doc_id={{ doc.id }}&del_wk={{ worker.id }}"><button>X</button></a></td>
                 </tr>

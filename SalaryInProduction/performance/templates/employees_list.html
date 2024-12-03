@@ -9,7 +9,7 @@
         </tr>
         {% for empl in employees %}
         <tr>
-            <td><a href="/perf/edit_empl/{{ empl.id }}">{{ empl }}</a></td>
+            <td><a href="{% url 'edit_employee' empl.id %}">{{ empl }}</a></td>
             <td align="center"> {{ empl.hired }} </td>
             {% if empl.dismissed %}
                 <td align="center"> Уволен </td>

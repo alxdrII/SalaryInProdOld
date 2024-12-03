@@ -20,7 +20,7 @@
                 <input type="text" id="descript" name="descript" maxlength="250" value="{{ product.description }}"></p>
 
             <button type="submit">Изменить</button>
-            <button><a href="/perf/dicts/prods">Отмена</a></button>
+            <button><a href="{% url 'products_list' %}">Отмена</a></button>
 
         </fieldset>
     </form>

@@ -14,7 +14,7 @@
         {% if user.is_authenticated %}
             <a href="{% url 'logout' %}">Выйти</a> |
         {% endif %}
-        <a>Документы выработки</a> | <a href="/perf/dicts">Справочники</a> | <a href="/perf/report">Отчеты</a>
+        <a>Документы выработки</a> | <a href="{% url 'menu_lists' %}">Справочники</a> | <a href="{% url 'report' %}">Отчеты</a>
 
         <h2>Документы выработки</h2>
         {% include "input_data.html" %}
@@ -32,8 +32,7 @@
             </tr>
         {% for doc in created_docs%}
             <tr>
-                <!--td><a href="doc_show?doc_id={{doc.id}}"> {{ doc }}</a></td-->
-                <td><a href="doc_show/{{doc.id}}"> {{ doc }}</a></td>
+                <td><a href="{% url 'perf_doc' doc.id %}"> {{ doc }}</a></td>
                 <td align="right">{{ doc.percent|floatformat:2 }}%</td>
                 <td>{{ doc.description }}</td>
                 <td><a href="?del_doc={{ doc.id }}"><button>X</button></a></td>
