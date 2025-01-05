@@ -3,10 +3,8 @@ from django.utils import timezone
 from django.db import models
 
 
-# Create your models here.
 class CreatedProducts(models.Model):
-    """
-    Документ выработки продукции.
+    """ Документ выработки продукции.
     Шапка документа о выпуске продукции бригадой сотрудников, содержит общий процент выработки
 
     """
@@ -25,10 +23,58 @@ class CreatedProducts(models.Model):
         return f'Выработка № {self.doc_number} от {self.doc_data}'
 
 
+class Drawing(models.Model):
+    """ Рисунок наносимый на форму изделия """
+
+    name = models.CharField(max_length=25, unique=True, verbose_name='Рисунок')
+
+    class Meta:
+        verbose_name_plural = 'Рисунки'
+        verbose_name = 'Рисунок'
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
+class Shape(models.Model):
+    """ Форма изделия """
+
+    name = models.CharField(max_length=25, unique=True, verbose_name='Форма')
+
+    class Meta:
+        verbose_name_plural = 'Формы'
+        verbose_name = 'Форма'
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
+class Workshop(models.Model):
+    """ Цех. Место производства """
+
+    name = models.CharField(max_length=25, unique=True, verbose_name='Цех')
+    work_drt = models.TimeField(default=time(12, 0, 0), verbose_name='Продолжительность смены')
+    repair_drt = models.TimeField(blank=True, verbose_name='Продолжительность ремонта')
+    reboot_drt = models.TimeField(blank=True, verbose_name='Продолжительность перезагрузки')
+    proces_drt = models.TimeField(blank=True, verbose_name='Продолжительность обработки')
+    power = models.PositiveSmallIntegerField(blank=True, verbose_name='Мощность')
+    correction = models.DecimalField(max_digits=8, decimal_places=5, verbose_name='Общая коррекция')
+    machines_num = models.PositiveSmallIntegerField(verbose_name='Количество станков')
+
+    class Meta:
+        verbose_name_plural = 'Цеха'
+        verbose_name = 'Цех'
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
-    """
-    Изделия.
-    Список всей продукции, которую производим.
+    """ Изделия.
+    Список производимой продукции
 
     """
 
@@ -36,6 +82,14 @@ class Product(models.Model):
     name = models.CharField(max_length=150, verbose_name='Наименование')
     quota = models.PositiveSmallIntegerField(verbose_name='Норма выработки')
     description = models.TextField(blank=True, verbose_name='Описание')
+
+    workshop = models.ForeignKey(Workshop, on_delete=models.RESTRICT, verbose_name='Цех')
+    shape = models.ForeignKey(Shape, on_delete=models.RESTRICT, verbose_name='Форма')
+    drawing = models.ForeignKey(Drawing, on_delete=models.RESTRICT, verbose_name='Рисунок')
+    power = models.PositiveSmallIntegerField(blank=True, verbose_name='Мощность')
+    proces_drt = models.TimeField(blank=True, verbose_name='Продолжительность обработки')
+    complexity = models.DecimalField(max_digits=8, decimal_places=5, verbose_name='Сложность изготовления')
+    limit = models.PositiveSmallIntegerField(blank=True, verbose_name='Предел')
 
     class Meta:
         verbose_name_plural = 'Изделия'
@@ -47,8 +101,7 @@ class Product(models.Model):
 
 
 class Production(models.Model):
-    """
-    Выработка
+    """ Выработка
     Табличная часть документа выработки продукции. Содержит список и количество продукции,
     выработанной отчетной сменой
 
@@ -70,8 +123,7 @@ class Production(models.Model):
 
 
 class Employee(models.Model):
-    """
-    Сотрудники.
+    """ Сотрудники.
     Список всех сотрудников работающих или работавших на производственного предприятии
 
     """
@@ -92,8 +144,7 @@ class Employee(models.Model):
 
 
 class Brigade(models.Model):
-    """
-    Бригада.
+    """ Бригада.
     Табличная часть документа выработки продукции. Содержит список сотрудников,
     участвовавших в производстве изделий за смену и время, которе они затратили
 
@@ -110,3 +161,21 @@ class Brigade(models.Model):
 
     def __str__(self):
         return str(self.employee)
+
+'''
+class Specification(models.Model):
+    """ Спецификация продукции """
+    
+    workshop = models.ForeignKey(Workshop, on_delete=models.RESTRICT, verbose_name='Цех')
+    shape = models.ForeignKey(Shape, on_delete=models.RESTRICT, verbose_name='Форма')
+    drawing = models.ForeignKey(Drawing, on_delete=models.RESTRICT, verbose_name='Рисунок')
+    power = models.PositiveSmallIntegerField(blank=True, verbose_name='Мощность')
+    proces_drt = models.TimeField(blank=True, verbose_name='Продолжительность обработки')
+    complexity = models.DecimalField(max_digits=8, decimal_places=5, verbose_name='Сложность изготовления')
+    limit = models.PositiveSmallIntegerField(blank=True, verbose_name='Предел')
+    
+    class Meta:
+        verbose_name_plural = 'Спецификации'
+        verbose_name = 'Спецификация'
+        ordering = ['name']
+'''

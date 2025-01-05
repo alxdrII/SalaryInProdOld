@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c797806-beb2-4b6f-ab7f-e65eee091b68" name="Changes" comment="28.11.2024 20:43&#10;Correction">
+    <list default="true" id="1c797806-beb2-4b6f-ab7f-e65eee091b68" name="Changes" comment="03.12.2024 20:59&#10;links">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryInProduction/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/templates/dicts_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/templates/dicts_base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/templates/doc_show.html" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/templates/doc_show.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/templates/docs_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/templates/docs_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/templates/employee_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/templates/employee_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/templates/employees_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/templates/employees_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/templates/product_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/templates/product_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/templates/products_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/templates/products_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/templates/reports.html" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/templates/reports.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +43,7 @@
     &quot;Python.urls.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/lebedevaa/media/PyCharmProjects/SalaryInProduction/images&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/lebedevaa/media/PyCharmProjects/sitewomen&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
@@ -182,7 +173,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732816059152</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="03.12.2024 20:59&#10;links">
+      <option name="closed" value="true" />
+      <created>1733248792072</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1733248792072</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -196,6 +195,7 @@
     <MESSAGE value="22.11.2024 22:43&#10;requirements" />
     <MESSAGE value="25.11.2024 22:33&#10;Correction of defects" />
     <MESSAGE value="28.11.2024 20:43&#10;Correction" />
-    <option name="LAST_COMMIT_MESSAGE" value="28.11.2024 20:43&#10;Correction" />
+    <MESSAGE value="03.12.2024 20:59&#10;links" />
+    <option name="LAST_COMMIT_MESSAGE" value="03.12.2024 20:59&#10;links" />
   </component>
 </project>
