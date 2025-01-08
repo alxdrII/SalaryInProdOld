@@ -1,12 +1,12 @@
-from datetime import time
+from datetime import time, timedelta
 from django.utils import timezone
 from django.db import models
 
 
 class CreatedProducts(models.Model):
     """ Документ выработки продукции.
-    Шапка документа о выпуске продукции бригадой сотрудников, содержит общий процент выработки
 
+    Шапка документа о выпуске продукции бригадой сотрудников, содержит общий процент выработки
     """
 
     doc_data = models.DateField(default=timezone.now(), verbose_name='Дата')
@@ -24,7 +24,9 @@ class CreatedProducts(models.Model):
 
 
 class Drawing(models.Model):
-    """ Рисунок наносимый на форму изделия """
+    """
+    Рисунок наносимый на форму изделия
+    """
 
     name = models.CharField(max_length=25, unique=True, verbose_name='Рисунок')
 
@@ -38,7 +40,9 @@ class Drawing(models.Model):
 
 
 class Shape(models.Model):
-    """ Форма изделия """
+    """
+    Форма изделия
+    """
 
     name = models.CharField(max_length=25, unique=True, verbose_name='Форма')
 
@@ -52,13 +56,18 @@ class Shape(models.Model):
 
 
 class Workshop(models.Model):
-    """ Цех. Место производства """
+    """
+    Цех.
+
+    Место производства
+    """
 
     name = models.CharField(max_length=25, unique=True, verbose_name='Цех')
-    work_drt = models.TimeField(default=time(12, 0, 0), verbose_name='Продолжительность смены')
-    repair_drt = models.TimeField(blank=True, verbose_name='Продолжительность ремонта')
-    reboot_drt = models.TimeField(blank=True, verbose_name='Продолжительность перезагрузки')
-    proces_drt = models.TimeField(blank=True, verbose_name='Продолжительность обработки')
+    # work_drt = models.TimeField(default=time(12, 0, 0), verbose_name='Продолжительность смены')
+    work_drt = models.DurationField(default=timedelta(hours=12), verbose_name='Продолжительность смены')
+    repair_drt = models.DurationField(blank=True, verbose_name='Продолжительность ремонта')
+    reboot_drt = models.DurationField(blank=True, verbose_name='Продолжительность перезагрузки')
+    process_drt = models.DurationField(blank=True, verbose_name='Продолжительность обработки')
     power = models.PositiveSmallIntegerField(blank=True, verbose_name='Мощность')
     correction = models.DecimalField(max_digits=8, decimal_places=5, verbose_name='Общая коррекция')
     machines_num = models.PositiveSmallIntegerField(verbose_name='Количество станков')
@@ -73,9 +82,10 @@ class Workshop(models.Model):
 
 
 class Product(models.Model):
-    """ Изделия.
-    Список производимой продукции
+    """
+    Изделия.
 
+    Список производимой продукции
     """
 
     code = models.CharField(max_length=50, unique=True, verbose_name='Артикул')
@@ -83,13 +93,14 @@ class Product(models.Model):
     quota = models.PositiveSmallIntegerField(verbose_name='Норма выработки')
     description = models.TextField(blank=True, verbose_name='Описание')
 
+    power = models.PositiveSmallIntegerField(blank=True, verbose_name='Мощность')
+    process_drt = models.DurationField(blank=True, verbose_name='Продолжительность обработки')
+    complexity = models.DecimalField(max_digits=8, decimal_places=5, verbose_name='Сложность изготовления')
+    limit = models.PositiveSmallIntegerField(blank=True, verbose_name='Предел')
+
     workshop = models.ForeignKey(Workshop, on_delete=models.RESTRICT, verbose_name='Цех')
     shape = models.ForeignKey(Shape, on_delete=models.RESTRICT, verbose_name='Форма')
     drawing = models.ForeignKey(Drawing, on_delete=models.RESTRICT, verbose_name='Рисунок')
-    power = models.PositiveSmallIntegerField(blank=True, verbose_name='Мощность')
-    proces_drt = models.TimeField(blank=True, verbose_name='Продолжительность обработки')
-    complexity = models.DecimalField(max_digits=8, decimal_places=5, verbose_name='Сложность изготовления')
-    limit = models.PositiveSmallIntegerField(blank=True, verbose_name='Предел')
 
     class Meta:
         verbose_name_plural = 'Изделия'
@@ -101,10 +112,11 @@ class Product(models.Model):
 
 
 class Production(models.Model):
-    """ Выработка
-    Табличная часть документа выработки продукции. Содержит список и количество продукции,
-    выработанной отчетной сменой
+    """
+    Выработка
 
+    Табличная часть документа выработки продукции.
+    Содержит список и количество продукции, выработанной отчетной сменой
     """
 
     doc = models.ForeignKey(CreatedProducts, on_delete=models.CASCADE, verbose_name='Документ')
@@ -123,9 +135,10 @@ class Production(models.Model):
 
 
 class Employee(models.Model):
-    """ Сотрудники.
-    Список всех сотрудников работающих или работавших на производственного предприятии
+    """
+    Сотрудники.
 
+    Список сотрудников производственного предприятии
     """
 
     STATUS = ((True, 'Уволен'), (False, 'Сотрудник'))
@@ -144,10 +157,12 @@ class Employee(models.Model):
 
 
 class Brigade(models.Model):
-    """ Бригада.
-    Табличная часть документа выработки продукции. Содержит список сотрудников,
-    участвовавших в производстве изделий за смену и время, которе они затратили
+    """
+    Бригада.
 
+    Табличная часть документа выработки продукции.
+    Содержит список сотрудников, участвовавших в производстве изделий за смену
+    и время, которе они затратили
     """
 
     doc = models.ForeignKey(CreatedProducts, on_delete=models.CASCADE, verbose_name='Документ')

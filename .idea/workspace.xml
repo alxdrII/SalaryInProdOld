@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c797806-beb2-4b6f-ab7f-e65eee091b68" name="Changes" comment="03.12.2024 20:59&#10;links">
+    <list default="true" id="1c797806-beb2-4b6f-ab7f-e65eee091b68" name="Changes" comment="05.01.2025 19:41&#10;models">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SalaryInProduction/performance/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryInProduction/performance/models.py" afterDir="false" />
     </list>
@@ -181,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733248792072</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="05.01.2025 19:41&#10;models">
+      <option name="closed" value="true" />
+      <created>1736095293184</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1736095293184</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -196,6 +204,7 @@
     <MESSAGE value="25.11.2024 22:33&#10;Correction of defects" />
     <MESSAGE value="28.11.2024 20:43&#10;Correction" />
     <MESSAGE value="03.12.2024 20:59&#10;links" />
-    <option name="LAST_COMMIT_MESSAGE" value="03.12.2024 20:59&#10;links" />
+    <MESSAGE value="05.01.2025 19:41&#10;models" />
+    <option name="LAST_COMMIT_MESSAGE" value="05.01.2025 19:41&#10;models" />
   </component>
 </project>
